@@ -1,0 +1,16 @@
+    .bg-1 {
+        background-color: #000000;
+        /* Green */
+        color: #e6e6e6;
+    }
+	
+	body {
+  padding-top: 50px;
+  color: #e6e6e6;
+  background: #000000 !important;
+
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}

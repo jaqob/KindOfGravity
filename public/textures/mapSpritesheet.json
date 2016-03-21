@@ -1,0 +1,95 @@
+{
+	"frames": {
+		"mud8x8": {
+			"frame": {
+				"x": 0,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"sourceSize": {
+				"w": 8,
+				"h": 8
+			}
+		},
+		"concrete": {
+			"frame": {
+				"x": 0,
+				"y": 9,
+				"w": 8,
+				"h": 8
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 9,
+				"w": 8,
+				"h": 8
+			},
+			"sourceSize": {
+				"w": 8,
+				"h": 8
+			}
+		},
+		"grass": {
+			"frame": {
+				"x": 9,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 9,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"sourceSize": {
+				"w": 8,
+				"h": 8
+			}
+		},
+		"goal": {
+			"frame": {
+				"x": 9,
+				"y": 9,
+				"w": 8,
+				"h": 8
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 9,
+				"y": 9,
+				"w": 8,
+				"h": 8
+			},
+			"sourceSize": {
+				"w": 8,
+				"h": 8
+			}
+		}
+	},
+	"meta": {
+		"app": "None",
+		"version": "0",
+		"image": "mapSpritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 17,
+			"h": 17
+		},
+		"scale": "1"
+	}
+}
