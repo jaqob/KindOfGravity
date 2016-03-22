@@ -785,7 +785,7 @@ function collisionHandling2(level, player, dTfactor)
    socket.on('gameId', function (msg)
     {
         console.log("gameId " + msg);
-        document.getElementById("gameId").textContent="Game ID: " + msg;
+        document.getElementById("gameId").textContent="URL to join: https://kindofgravity.herokuapp.com/join?server=" + msg;
     }
     );
 
