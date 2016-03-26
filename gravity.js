@@ -71,7 +71,7 @@ socket.on('levelEnded', function (msg)
   console.log("levelEnded " + msg );
   for(var index = 0; index < games.length; index++)
   {
-    if(socket.id == games[index].player1SocketId || socket.id == games[index].player2SocketId)
+    if(socket.id == games[index].player1SocketId)// || socket.id == games[index].player2SocketId)
     {
       console.log(games[index].level);
       if(msg == games[index].level)

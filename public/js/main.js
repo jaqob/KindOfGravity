@@ -163,7 +163,7 @@ function loadLevelData(levelNr)
     $.ajax(
     {
         type : 'GET',
-        url : 'levels/Level' + levelNr + '.json?v=0.1',
+        url : 'levels/Level' + levelNr + '.json?v=0.2',
         data : data,
         async : true,
         dataType : 'json',
@@ -184,16 +184,27 @@ function loadLevelData(levelNr)
     );
 }
 
+function clearStages()
+{
+
+        outerStage.removeChild(stage);
+        outerStage.removeChild(infoStage);
+        stage.removeChild(currentLevel);
+        stage.removeChild(player);
+        infoStage.removeChild(healthBar);
+        stage.destroy();
+        infoStage.destroy();
+        //loadingStage.destroy();
+        outerStage.destroy();
+}
+
 function initLevel()
 {
-    if (stage)
-    {
-        outerStage.removeChild(stage);
-        stage.removeChild(currentLevel);
-        stage.destroy();
-    }
-
-    stage = new PIXI.Container(0x000000);
+        clearStages();
+        outerStage = new PIXI.Container(0x000000);
+        //loadingStage = new PIXI.Container(0x000000);
+        infoStage = new PIXI.Container(0x000000);
+        stage = new PIXI.Container(0x000000);
 
         //Only works if data is loaded
         LEVEL_WIDTH = jsonData.spritesWidth * 8;
@@ -226,13 +237,11 @@ function initLevel()
         loadText.text += "Adding Players - Done\n"
         outerStage.removeChild(loadingStage);
         infoStage.position.y = LEVEL_HEIGHT;
+
+
         outerStage.addChild(infoStage);
 
-        if (player)
-        {
-            stage.removeChild(player);
-            infoStage.removeChild(healthBar);
-        }
+
 
         healthBar = new HealthBar(8, infoStage);
         player = new Player(jsonData.player1StartX, jsonData.player1StartY, currentLevel.realWidth, currentLevel.realHeight, "blue", stage);
