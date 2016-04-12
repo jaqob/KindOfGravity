@@ -249,7 +249,7 @@ function initLevel()
 
         for(var index = 0; index < 10; index++)
         {
-            otherPlayer[index] = new Player(-10, -10, currentLevel.realWidth, currentLevel.realHeight, "red", stage);
+            otherPlayer[index] = new Player(-100, -100, currentLevel.realWidth, currentLevel.realHeight, "red", stage);
             otherBullets[index] = new Bullets(null, 0, 0);
             for(var index2 = 0; index2 < 50; index2++)
             {
@@ -390,7 +390,8 @@ function update()
 
     function startSinglePlayer()
     {
-      nextLevel();
+        startLevel(1);
+     // nextLevel();
   }
 
   function levelEnded()
