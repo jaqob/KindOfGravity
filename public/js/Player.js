@@ -150,6 +150,15 @@ Player.prototype.hit = function() {
 
 }
 
+Player.prototype.hitBullet = function() {
+	if(this.invulnerableTimer<1)
+	{
+	this.health-=5;
+	//this.invulnerableTimer=30;
+	}
+
+}
+
 Player.prototype.updatePosition = function(dT) {
         this.position.y -= this.velocity_y*dT;
 		this.position.x -= this.velocity_x*dT;

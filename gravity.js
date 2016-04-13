@@ -51,7 +51,7 @@ socket.on('createGame', function (msg)
   var gameId = games.length;
   games[gameId] = new Game(gameId);
   games[gameId].player1SocketId = socket.id;
-  games[gameId].level = 1;
+  games[gameId].level = msg;
   console.log("createGame: " + games[gameId].id + " " + socket.id);
   socket.emit("gameId", games[gameId].id);
 }

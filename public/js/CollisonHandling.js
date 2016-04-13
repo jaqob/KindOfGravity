@@ -54,7 +54,7 @@ function bulletCollisionPlayer(player, bullets)
                 (bX + bullets.bullet[bulletIndex].width <= player.getRealX())) === false)
         {
             bullets.removeBullet(bulletIndex);
-            player.hit();
+            player.hitBullet();
 
             break;
         }

@@ -47,6 +47,7 @@ Bullets.prototype.removeBullet = function(index)
 {
 	                this.stage.removeChild(this.bullet[index]);
                     delete this.bullet[index];
+                    this.cleanArray();
 }
 
 Bullets.prototype.export = function()

@@ -379,10 +379,10 @@ INFO_HEIGHT = 50;
     function gameOver()
     {}
 
-    function startSinglePlayer()
+    function startSinglePlayer(levelNr)
     {
-        currentLevelNumber = 1;
-        startLevel(currentLevelNumber);
+        //currentLevelNumber = 1;
+        startLevel(levelNr);
     }
 
     function levelEnded()
@@ -411,7 +411,7 @@ INFO_HEIGHT = 50;
         }
     }
 
-    function startMultiPlayer()
+    function startMultiPlayer(levelNr)
     {
         console.log("CreateGame");
 
@@ -430,7 +430,7 @@ INFO_HEIGHT = 50;
             outerStage.addChild(winnerText);
         renderer.render(outerStage);
         console.log("socket " + socket.connected);
-        socket.emit('createGame', "null");
+        socket.emit('createGame', levelNr);
         //nextLevelStart();
     }
 
@@ -570,7 +570,7 @@ INFO_HEIGHT = 50;
         var before = performance.now();
         collisionHandling(currentLevel, player, dTfactor);
         bulletCollision(currentLevel, player.bullets);
-        bulletCollisionPlayer(player, player.bullets);
+        //bulletCollisionPlayer(player, player.bullets);
         bulletCollisionPlayer(player, otherBullets[1]);
         tempCollisionTimer += (performance.now() - before);
         //console.log("collisionHandling Time: " + (performance.now()-before));
@@ -590,7 +590,22 @@ INFO_HEIGHT = 50;
 
         multiplayer = false;
         host = true;
-        startSinglePlayer();
+
+        var level = 1;
+        if(document.getElementById('level1').checked)
+            {
+                level=1;
+            }
+        else if(document.getElementById('level2').checked)
+            {
+                level=2;
+            }
+            else if(document.getElementById('level3').checked)
+            {
+                level=3;
+            }
+
+        startSinglePlayer(level);
 
     }
     );
@@ -601,7 +616,23 @@ INFO_HEIGHT = 50;
         console.log("2p");
         $("#start").prop('disabled', false);
         host = true;
-        startMultiPlayer();
+
+
+        var level = 1;
+        if(document.getElementById('level1').checked)
+            {
+                level=1;
+            }
+        else if(document.getElementById('level2').checked)
+            {
+                level=2;
+            }
+            else if(document.getElementById('level3').checked)
+            {
+                level=3;
+            }
+
+        startMultiPlayer(level);
     }
     );
 
@@ -638,6 +669,8 @@ INFO_HEIGHT = 50;
             player.position.y = obj.pY;
             player.rotation = obj.pR;
 			player.health = obj.pH;
+            player.updateHealthBar();
+
 
             if (obj.pA > 0)
             {
