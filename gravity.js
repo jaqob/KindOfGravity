@@ -87,6 +87,36 @@ socket.on('levelEnded', function (msg)
 );
 
 
+socket.on('playerDied', function (msg)
+{
+  for(var index = 0; index < games.length; index++)
+  {
+    if(socket.id == games[index].player1SocketId)
+    {      
+
+      //io.to(games[index].player1SocketId).emit('startGame', games[index].level);
+       this.player2Wins++; 
+      io.to(games[index].player2SocketId).emit('winner', null);
+    }
+    else if(socket.id == games[index].player2SocketId)
+    {
+       this.player1Wins++;
+ io.to(games[index].player1SocketId).emit('winner', null);
+    
+    }
+
+
+      io.to(games[index].player1SocketId).emit('startGame', games[index].level);
+      io.to(games[index].player2SocketId).emit('startGame', games[index].level);
+
+
+    
+    }
+  
+}
+);
+
+
 socket.on('joinGame', function (msg)
 {
   console.log("Joining " + msg);
@@ -134,5 +164,7 @@ function Game(id){
   this.id = id;
   this.player1SocketId = "";
   this.player2SocketId = "";
+  this.player1Wins = 0;
+  this.player2Wins = 0;
   this.level=0;
 }

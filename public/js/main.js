@@ -241,7 +241,15 @@ INFO_HEIGHT = 50;
 
         outerStage.addChild(infoStage);
 
+        if(host==true)
+        {
         player = new Player(jsonData.player1StartX, jsonData.player1StartY, currentLevel.realWidth, currentLevel.realHeight, "blue", stage);
+        }
+        else
+        {
+                    player = new Player(jsonData.player2StartX, jsonData.player2StartY, currentLevel.realWidth, currentLevel.realHeight, "blue", stage);
+
+        }
         collectedByOtherPlayer = 0;
 
         for (var index = 0; index < 3; index++)
@@ -377,7 +385,8 @@ INFO_HEIGHT = 50;
     }
 
     function gameOver()
-    {}
+    {
+    }
 
     function startSinglePlayer(levelNr)
     {
@@ -549,7 +558,7 @@ INFO_HEIGHT = 50;
         {
             stage.alpha /= 2;
 
-            winnerText = new PIXI.Text("The End",
+            winnerText = new PIXI.Text("The End - Lost",
                 {
                     font : "20px Arial",
                     fill : "red",
@@ -558,6 +567,8 @@ INFO_HEIGHT = 50;
             winnerText.position.y = 20;
             winnerText.position.x = 500;
             infoStage.addChild(winnerText);
+                    socket.emit("playerDied", null);
+
             gameLoop = gameOver;
         }
 
@@ -656,6 +667,21 @@ INFO_HEIGHT = 50;
     {
         console.log("gameId " + msg);
         document.getElementById("gameId").textContent = "URL to join: https://kindofgravity.herokuapp.com/join?server=" + msg;
+    }
+    );
+
+        socket.on('winner', function (msg)
+    {
+                    winnerText = new PIXI.Text("The End - You won",
+                {
+                    font : "20px Arial",
+                    fill : "red",
+                }
+                );
+            winnerText.position.y = 20;
+            winnerText.position.x = 500;
+            infoStage.addChild(winnerText);
+            gameLoop=gameOver;
     }
     );
 

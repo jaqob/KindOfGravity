@@ -81,7 +81,8 @@ function collisionHandling(level, player, dTfactor)
                 if (level.spriteChart[currentIndex].collectable === 1)
                 {
                     level.collect(currentIndex);
-                    player.collected++;
+                    //player.collected++;
+                    player.health+=20;
                 }
                 else
                 {
