@@ -54,7 +54,6 @@ Level.prototype.collect = function (x)
     this.collectedFull.push(x);
     this.removeChild(this.spriteChart[x]);
     this.spriteChart[x] = null;
-
 };
 
 /*
@@ -108,28 +107,29 @@ Level.prototype.loadLevel2 = function (jsonMap)
     this.realWidth = jsonMap.spritesWidth * 8;
     this.realHeight = jsonMap.spritesHeight * 8;
 
-    /*
-    var frames = [];
-    frames.push(PIXI.Texture.fromFrame('textures/gold1.png'));
-    frames.push(PIXI.Texture.fromFrame('textures/gold2.png'));
-    frames.push(PIXI.Texture.fromFrame('textures/gold3.png'));
-    frames.push(PIXI.Texture.fromFrame('textures/gold4.png'));
-    var goldSprite = new PIXI.extras.MovieClip(frames);
-     */
-    var frames = [];
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross1.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross2.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross3.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross4.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross5.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross6.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross7.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross8.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross9.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross10.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross11.png"));
-    frames.push(PIXI.Texture.fromFrame("textures/Cross/Cross12.png"));
-    var goldSprite = new PIXI.extras.MovieClip(frames);
+
+    var crossFrames = [];
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross1.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross2.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross3.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross4.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross5.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross6.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross7.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross8.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross9.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross10.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross11.png"));
+    crossFrames.push(PIXI.Texture.fromFrame("textures/Cross/Cross12.png"));
+
+	
+	var twoBulletFrames = [];
+    twoBulletFrames.push(PIXI.Texture.fromFrame("textures/TwoBullet/TwoBullet1.png"));
+	twoBulletFrames.push(PIXI.Texture.fromFrame("textures/TwoBullet/TwoBullet2.png"));
+	twoBulletFrames.push(PIXI.Texture.fromFrame("textures/TwoBullet/TwoBullet3.png"));
+	twoBulletFrames.push(PIXI.Texture.fromFrame("textures/TwoBullet/TwoBullet4.png"));
+	twoBulletFrames.push(PIXI.Texture.fromFrame("textures/TwoBullet/TwoBullet5.png"));
+
 
     var tempIndex = 0;
 
@@ -139,7 +139,7 @@ Level.prototype.loadLevel2 = function (jsonMap)
         {
             var mapType = jsonMap.map[indexY * jsonMap.spritesWidth + indexX];
 
-            if (mapType != 0 && mapType != 9)
+            if (mapType != 0 && mapType != 8 && mapType != 9)
             {
                 this.spriteChart[tempIndex] = new levelSprite(PIXI.Texture.fromFrame(jsonMap.tiles[mapType].texture));
                 this.spriteChart[tempIndex].health = jsonMap.tiles[mapType].health;
@@ -148,10 +148,23 @@ Level.prototype.loadLevel2 = function (jsonMap)
                 this.addChild(this.spriteChart[tempIndex]);
                 tempIndex++;
             }
+			
+			else if (mapType == 8)
+            {
+				console.log("Adding 9");
+                this.toCollect++;
+                this.spriteChart[tempIndex] = new collectableSprite(twoBulletFrames,0.05, mapType);
+                this.spriteChart[tempIndex].position.x = 8 * indexX;
+                this.spriteChart[tempIndex].position.y = 8 * indexY;
+                this.addChild(this.spriteChart[tempIndex]);
+                tempIndex++;
+            }
+			
             else if (mapType == 9)
             {
+				console.log("Adding 9");
                 this.toCollect++;
-                this.spriteChart[tempIndex] = new collectableSprite(frames);
+                this.spriteChart[tempIndex] = new collectableSprite(crossFrames, 0.1, mapType);
                 this.spriteChart[tempIndex].position.x = 8 * indexX;
                 this.spriteChart[tempIndex].position.y = 8 * indexY;
                 this.addChild(this.spriteChart[tempIndex]);
@@ -190,10 +203,11 @@ function levelSprite(texture)
 levelSprite.prototype = Object.create(PIXI.Sprite.prototype);
 levelSprite.prototype.health = 1;
 
-function collectableSprite(texture)
+function collectableSprite(texture, speed, type)
 {
-    PIXI.extras.MovieClip.call(this, texture, 8, 8);
-    this.animationSpeed = 0.10;
+    PIXI.extras.MovieClip.call(this, texture, 16, 16);
+    this.animationSpeed = speed;
+	this.collectableType = type;
     this.play();
 };
 collectableSprite.prototype = Object.create(PIXI.extras.MovieClip.prototype);

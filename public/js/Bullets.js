@@ -6,6 +6,7 @@ function Bullets(player, worldWidth, worldHeight, stage)
   this.worldHeight = worldHeight;
   this.bullet = [];
   this.coolDown = 0;
+  this.type = 0;
   this.stage = stage;
 }
 
@@ -22,9 +23,23 @@ Bullets.prototype.cleanArray = function()
 Bullets.prototype.addBullet = function()
 {
 				this.cleanArray();
+				if(this.type == 0)
+				{
                 this.bullet[this.bullet.length] = new Bullet(this.player.position.x, this.player.position.y, this.player.rotation, this.player.velocity_x, this.player.velocity_y, this.worldWidth, this.worldHeight);
 				this.stage.addChild(this.bullet[this.bullet.length - 1]);
 				this.coolDown=15;
+				}
+				else if(this.type == 1)
+				{
+					
+				this.bullet[this.bullet.length] = new Bullet(this.player.position.x, this.player.position.y, this.player.rotation-0.1, this.player.velocity_x, this.player.velocity_y, this.worldWidth, this.worldHeight);
+				this.stage.addChild(this.bullet[this.bullet.length - 1]);
+				
+				this.bullet[this.bullet.length] = new Bullet(this.player.position.x, this.player.position.y, this.player.rotation+0.1, this.player.velocity_x, this.player.velocity_y, this.worldWidth, this.worldHeight);
+				this.stage.addChild(this.bullet[this.bullet.length - 1]);
+				
+				this.coolDown=15;
+				}
 };
 
 Bullets.prototype.update = function(dT)
@@ -72,7 +87,7 @@ Bullets.prototype.export = function()
 function Bullet(x, y, rotation, initVelocityX, initVelocityY, worldWidth, worldHeight)
 {
     PIXI.Sprite.call(this, PIXI.loader.resources['bullet3x3'].texture, 3, 3);
-	console.log((9*Math.cos(rotation + Math.PI / 2)));
+	//console.log((9*Math.cos(rotation + Math.PI / 2)));
     this.position.x = x - 1 - (12*Math.cos(rotation + Math.PI / 2));
     this.position.y = y - 1 - (12*Math.sin(rotation + Math.PI / 2));
     this.velocity_x = initVelocityX;

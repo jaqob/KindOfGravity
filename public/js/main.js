@@ -84,6 +84,13 @@ INFO_HEIGHT = 50;
         PIXI.loader.add('cross11', "textures/Cross/Cross11.png");
         PIXI.loader.add('cross12', "textures/Cross/Cross12.png");
 
+		PIXI.loader.add('TwoBullet1', "textures/TwoBullet/TwoBullet1.png");
+        PIXI.loader.add('TwoBullet2', "textures/TwoBullet/TwoBullet2.png");
+		PIXI.loader.add('TwoBullet3', "textures/TwoBullet/TwoBullet3.png");
+		PIXI.loader.add('TwoBullet4', "textures/TwoBullet/TwoBullet4.png");
+		PIXI.loader.add('TwoBullet5', "textures/TwoBullet/TwoBullet5.png");
+		
+		
         PIXI.loader.once('complete', init);
         PIXI.loader.load();
     }
@@ -188,7 +195,6 @@ INFO_HEIGHT = 50;
 
     function clearStages()
     {
-
         outerStage.removeChild(stage);
         outerStage.removeChild(infoStage);
         stage.removeChild(currentLevel);
@@ -219,6 +225,46 @@ INFO_HEIGHT = 50;
 
         loadText.text += "Processing Level"
         renderer.render(outerStage);
+		
+		var levelModifier = [];
+		
+		for(var index = 0; index < 5; index++)
+		{
+			var item = 9;
+			var itemLocation = Math.random()*jsonData.map.length;
+			
+			while(jsonData.map[Math.floor(itemLocation)] != 0)
+			{
+				itemLocation = Math.random()*jsonData.map.length;
+			}
+			
+			var obj = new Object();
+			obj.itemLocation = itemLocation;
+			obj.item = item;
+			levelModifier.push(obj);
+		}
+		
+		for(var index = 0; index < 1; index++)
+		{
+			var item = 8;
+			var itemLocation = Math.random()*jsonData.map.length;
+									
+			while(jsonData.map[Math.floor(itemLocation)] != 0)
+			{
+				itemLocation = Math.random()*jsonData.map.length;
+			}
+			
+			var obj = new Object();
+			obj.itemLocation = itemLocation;
+			obj.item = item;
+			levelModifier.push(obj);
+		}
+		
+		for(var index = 0; index < levelModifier.length; index++)
+		{
+			jsonData.map[Math.floor(levelModifier[index].itemLocation)] = levelModifier[index].item;
+		}	
+		
         currentLevel = new Level(jsonData);
         outerStage.removeChild(loadingStage);
         outerStage.addChild(stage);
@@ -373,11 +419,13 @@ INFO_HEIGHT = 50;
 
         exportData();
 
+		/*
         if (player.collected >= (currentLevel.toCollect - collectedByOtherPlayer))
         {
             console.log("out " + player.collected + " " + currentLevel.toCollect);
             gameLoop = levelEnded;
         }
+		*/
 
         renderer.render(outerStage);
         //setTimeout(gameLoop, 5);
@@ -459,7 +507,7 @@ INFO_HEIGHT = 50;
         winnerText.position.y = 300;
         winnerText.position.x = (outerStage.width / 2) - (winnerText.width / 2);
         loadText.text = "Waiting for server"
-            outerStage.addChild(winnerText);
+        outerStage.addChild(winnerText);
         renderer.render(outerStage);
     }
 
@@ -481,8 +529,9 @@ INFO_HEIGHT = 50;
 
         outerStage.addChild(winnerText);
         renderer.render(outerStage);
-        //loadLevelData(1);
-        setTimeout(loadLevelData, 1000, levelNr);
+        loadLevelData(levelNr);
+		console.log("loadLevelData " + levelNr);
+        //setTimeout(loadLevelData, 1000, levelNr);
         //requestAnimationFrame(gameLoop);
     }
 
@@ -615,9 +664,8 @@ INFO_HEIGHT = 50;
             {
                 level=3;
             }
-
+console.log("startSinglePlayer " + level);
         startSinglePlayer(level);
-
     }
     );
 

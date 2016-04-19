@@ -80,9 +80,19 @@ function collisionHandling(level, player, dTfactor)
             {
                 if (level.spriteChart[currentIndex].collectable === 1)
                 {
-                    level.collect(currentIndex);
+					console.log("level.spriteChart[currentIndex].collectableType " + level.spriteChart[currentIndex].collectableType );
+                    
+					if(level.spriteChart[currentIndex].collectableType == 9)
+					{
+						 player.health+=20;
+					}
+					else if(level.spriteChart[currentIndex].collectableType == 8)
+					{
+						player.bullets.type = 1;
+					}
+					level.collect(currentIndex);
                     //player.collected++;
-                    player.health+=20;
+                   
                 }
                 else
                 {
