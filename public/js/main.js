@@ -181,7 +181,7 @@ INFO_HEIGHT = 50;
                 jsonData = data;
                 loadText.text += " - Done\n"
                 renderer.render(outerStage);
-                initLevel();
+                initLevel(levelNr);
             },
             error : function (data)
             {
@@ -205,7 +205,7 @@ INFO_HEIGHT = 50;
         outerStage.destroy();
     }
 
-    function initLevel()
+    function initLevel(levelNr)
     {
         clearStages();
         outerStage = new PIXI.Container(0x000000);

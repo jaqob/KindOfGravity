@@ -51,7 +51,6 @@ socket.on('createGame', function (msg)
   
   var obj = JSON.parse(msg);
   
-  
   var gameId = games.length;
   games[gameId] = new Game(gameId);
   games[gameId].player1SocketId = socket.id;
