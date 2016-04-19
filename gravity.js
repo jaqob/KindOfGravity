@@ -172,4 +172,5 @@ function Game(id){
   this.player1Wins = 0;
   this.player2Wins = 0;
   this.level=0;
+  this.levelModifier= "";
 }

@@ -281,7 +281,7 @@ INFO_HEIGHT = 50;
         renderer.render(outerStage);
 
         addPlayers();
-		startGame();
+		
 		var obj = new Object();
 		obj.levelNr = levelNr;
 		obj.levelModifier = levelModifier;
@@ -289,6 +289,9 @@ INFO_HEIGHT = 50;
 		var jsonString = JSON.stringify(obj);
 
 		socket.emit('createGame', jsonString);
+		
+		
+		//startGame();
     }
 
     function addPlayers()
