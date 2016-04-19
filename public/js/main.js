@@ -725,8 +725,9 @@ console.log("startSinglePlayer " + level);
     }
     );
 
-    socket.on('startGame', function ()
+    socket.on('startGame', function (msg)
     {
+		console.log("startGame")
         startGame();
     }
     );
