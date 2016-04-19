@@ -165,8 +165,8 @@ socket.on('readyGame', function (msg)
         console.log(games[index]);
 
 
-        io.to(games[index].player1SocketId).emit('startGame');
-        io.to(games[index].player2SocketId).emit('startGame');
+        io.to(games[index].player1SocketId).emit('startGame', "");
+        io.to(games[index].player2SocketId).emit('startGame', "");
 
 		
       }
