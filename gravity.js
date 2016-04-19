@@ -151,6 +151,39 @@ socket.on('joinGame', function (msg)
 }
 );
 
+
+socket.on('readyGame', function (msg)
+{
+  console.log("readyGame " + msg);
+  for(var index = 0; index < games.length; index++)
+  {
+    if(msg==games[index].id)
+    {
+      if(games[index].player2SocketId == "")
+      {
+        games[index].player2SocketId = socket.id;
+        console.log(games[index]);
+
+
+        io.to(games[index].player1SocketId).emit('startGame');
+        io.to(games[index].player2SocketId).emit('startGame');
+
+		
+      }
+      else if(games[index].player2SocketId == socket.id)
+      {
+        console.log("rejoin?");
+      }
+      else
+      {
+       console.log("Game already started"); 
+     }
+     break;
+   }
+ }
+}
+);
+
 }
 );
 

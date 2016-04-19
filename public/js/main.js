@@ -164,7 +164,7 @@ INFO_HEIGHT = 50;
 
     }
 
-    function loadLevelData(levelNr)
+    function loadLevelData(levelNr, levelModifier)
     {
         loadText.text = "Level " + currentLevelNumber;
         loadText.text += "Downloading Level Data"
@@ -181,7 +181,7 @@ INFO_HEIGHT = 50;
                 jsonData = data;
                 loadText.text += " - Done\n"
                 renderer.render(outerStage);
-                initLevel(levelNr);
+                initLevel(levelNr, levelModifier);
             },
             error : function (data)
             {
@@ -205,7 +205,7 @@ INFO_HEIGHT = 50;
         outerStage.destroy();
     }
 
-    function initLevel(levelNr)
+    function initLevel(levelNr, externalLevelModifier)
     {
         clearStages();
         outerStage = new PIXI.Container(0x000000);
@@ -226,9 +226,10 @@ INFO_HEIGHT = 50;
         loadText.text += "Processing Level"
         renderer.render(outerStage);
 		
+		var levelModifier = [];
 		if(host == true)
 		{
-		var levelModifier = [];
+		
 		
 		for(var index = 0; index < 5; index++)
 		{
@@ -241,7 +242,7 @@ INFO_HEIGHT = 50;
 			}
 			
 			var obj = new Object();
-			obj.itemLocation = itemLocation;
+			obj.itemLocation = Math.floor(itemLocation);
 			obj.item = item;
 			levelModifier.push(obj);
 		}
@@ -257,17 +258,21 @@ INFO_HEIGHT = 50;
 			}
 			
 			var obj = new Object();
-			obj.itemLocation = itemLocation;
+			obj.itemLocation = Math.floor(itemLocation);
 			obj.item = item;
 			levelModifier.push(obj);
 		}
+		}
+		else{
+			levelModifier = externalLevelModifier;
+		}
+		
+		console.log(JSON.stringify(levelModifier));
 		
 		for(var index = 0; index < levelModifier.length; index++)
 		{
-			jsonData.map[Math.floor(levelModifier[index].itemLocation)] = levelModifier[index].item;
+			jsonData.map[levelModifier[index].itemLocation] = levelModifier[index].item;
 		}	
-		
-		}
 		
         currentLevel = new Level(jsonData);
         outerStage.removeChild(loadingStage);
@@ -288,10 +293,20 @@ INFO_HEIGHT = 50;
 		
 		var jsonString = JSON.stringify(obj);
 
+		if(host == true)
+		{
 		socket.emit('createGame', jsonString);
+		}
+		else
+		{
+		socket.emit('readyGame', jsonString);
+		}
 		
 		
-		//startGame();
+		if(multiplayer == false)
+		{
+		startGame();
+		}
     }
 
     function addPlayers()
@@ -453,7 +468,7 @@ INFO_HEIGHT = 50;
     function startSinglePlayer(levelNr)
     {
         //currentLevelNumber = 1;
-        startLevel(levelNr);
+        startLevel(levelNr, null);
     }
 
     function levelEnded()
@@ -478,7 +493,7 @@ INFO_HEIGHT = 50;
 
         if (multiplayer == false)
         {
-            startLevel(currentLevelNumber++);
+            startLevel(currentLevelNumber++, null);
         }
     }
 
@@ -501,7 +516,7 @@ INFO_HEIGHT = 50;
             outerStage.addChild(winnerText);
         renderer.render(outerStage);
         console.log("socket " + socket.connected);
-		startLevel(levelNr);
+		startLevel(levelNr, null);
         //socket.emit('createGame', levelNr);
         //nextLevelStart();
     }
@@ -526,7 +541,7 @@ INFO_HEIGHT = 50;
         renderer.render(outerStage);
     }
 
-    function startLevel(levelNr)
+    function startLevel(levelNr, levelModifier)
     {
         // outerStage.removeChild(loadingStage);
         outerStage.addChild(loadingStage);
@@ -544,7 +559,7 @@ INFO_HEIGHT = 50;
 
         outerStage.addChild(winnerText);
         renderer.render(outerStage);
-        loadLevelData(levelNr);
+        loadLevelData(levelNr, levelModifier);
 		console.log("loadLevelData " + levelNr);
         //setTimeout(loadLevelData, 1000, levelNr);
         //requestAnimationFrame(gameLoop);
@@ -710,20 +725,18 @@ console.log("startSinglePlayer " + level);
     }
     );
 
-    socket.on('startGame', function (levelNr)
+    socket.on('startGame', function ()
     {
-        //TODO get socket id from server
-        currentLevelNumber = levelNr;
-        startLevel(levelNr);
+        startGame();
     }
     );
 	
 	socket.on('loadGame', function (gameData)
     {
         //TODO get socket id from server
-		console.log("loadGame " + gameData);
-        //currentLevelNumber = levelNr;
-        //startLevel(levelNr);
+		console.log("loadGame gameData.level " + gameData.level);
+        currentLevelNumber = gameData.level;
+        startLevel(gameData.level, gameData.levelModifier);
     }
     );
 
