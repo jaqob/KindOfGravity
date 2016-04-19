@@ -226,6 +226,8 @@ INFO_HEIGHT = 50;
         loadText.text += "Processing Level"
         renderer.render(outerStage);
 		
+		if(host == true)
+		{
 		var levelModifier = [];
 		
 		for(var index = 0; index < 5; index++)
@@ -265,6 +267,8 @@ INFO_HEIGHT = 50;
 			jsonData.map[Math.floor(levelModifier[index].itemLocation)] = levelModifier[index].item;
 		}	
 		
+		}
+		
         currentLevel = new Level(jsonData);
         outerStage.removeChild(loadingStage);
         outerStage.addChild(stage);
@@ -277,6 +281,14 @@ INFO_HEIGHT = 50;
         renderer.render(outerStage);
 
         addPlayers();
+		startGame();
+		var obj = new Object();
+		obj.levelNr = levelNr;
+		obj.levelModifier = levelModifier;
+		
+		var jsonString = JSON.stringify(obj);
+
+		socket.emit('createGame', jsonString);
     }
 
     function addPlayers()
@@ -325,7 +337,6 @@ INFO_HEIGHT = 50;
         outerStage.addChild(loadingStage);
         loadingStage.alpha = 0.9;
         renderer.render(outerStage);
-        startGame();
     }
 
     function startGame()
@@ -487,7 +498,8 @@ INFO_HEIGHT = 50;
             outerStage.addChild(winnerText);
         renderer.render(outerStage);
         console.log("socket " + socket.connected);
-        socket.emit('createGame', levelNr);
+		startLevel(levelNr);
+        //socket.emit('createGame', levelNr);
         //nextLevelStart();
     }
 
@@ -700,6 +712,15 @@ console.log("startSinglePlayer " + level);
         //TODO get socket id from server
         currentLevelNumber = levelNr;
         startLevel(levelNr);
+    }
+    );
+	
+	socket.on('loadGame', function (gameData)
+    {
+        //TODO get socket id from server
+		console.log("loadGame " + gameData);
+        //currentLevelNumber = levelNr;
+        //startLevel(levelNr);
     }
     );
 

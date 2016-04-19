@@ -47,11 +47,16 @@ io.on('connection', function (socket)
 
 socket.on('createGame', function (msg)
 {
-    console.log("createGame start");
+  console.log("createGame start");
+  
+  var obj = JSON.parse(msg);
+  
+  
   var gameId = games.length;
   games[gameId] = new Game(gameId);
   games[gameId].player1SocketId = socket.id;
-  games[gameId].level = msg;
+  games[gameId].level = obj.levelNr;
+  games[gameId].levelModifier = obj.levelModifier;
   console.log("createGame: " + games[gameId].id + " " + socket.id);
   socket.emit("gameId", games[gameId].id);
 }
@@ -105,12 +110,9 @@ socket.on('playerDied', function (msg)
     
     }
 
-
       io.to(games[index].player1SocketId).emit('startGame', games[index].level);
       io.to(games[index].player2SocketId).emit('startGame', games[index].level);
 
-
-    
     }
   
 }
@@ -129,9 +131,12 @@ socket.on('joinGame', function (msg)
         games[index].player2SocketId = socket.id;
         console.log(games[index]);
 
+		/*
         io.to(games[index].player1SocketId).emit('startGame', games[index].level);
         io.to(games[index].player2SocketId).emit('startGame', games[index].level);
-
+		*/
+		 io.to(games[index].player2SocketId).emit('loadGame', games[index]);
+		
       }
       else if(games[index].player2SocketId == socket.id)
       {
