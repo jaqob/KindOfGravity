@@ -489,12 +489,17 @@ INFO_HEIGHT = 50;
         outerStage.addChild(winnerText);
         renderer.render(outerStage);
         console.log("levelEnded " + currentLevelNumber);
-        socket.emit("levelEnded", currentLevelNumber);
+        //socket.emit("levelEnded", currentLevelNumber);
 
         if (multiplayer == false)
         {
             startLevel(currentLevelNumber++, null);
         }
+		
+		if(host == true)
+		{
+			startLevel(currentLevelNumber, null);
+		}
     }
 
     function startMultiPlayer(levelNr)

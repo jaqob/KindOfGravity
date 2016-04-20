@@ -98,13 +98,13 @@ socket.on('levelEnded', function (msg)
       console.log(games[index].level);
       if(msg == games[index].level)
       {
-      games[index].level++;
-      io.to(games[index].player1SocketId).emit('startGame', games[index].level);
-      io.to(games[index].player2SocketId).emit('startGame', games[index].level);
+      //games[index].level++;
+      //io.to(games[index].player1SocketId).emit('startGame', games[index].level);
+      //io.to(games[index].player2SocketId).emit('startGame', games[index].level);
     }
     }
   }
-  socket.broadcast.emit('gameUpdateToAll', msg);
+  //socket.broadcast.emit('gameUpdateToAll', msg);
 }
 );
 
