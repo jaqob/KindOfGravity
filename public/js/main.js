@@ -474,6 +474,7 @@ INFO_HEIGHT = 50;
 	
     function levelEnded(levelNr)
     {
+		gameLoop = levelEnded;
         outerStage.addChild(loadingStage);
         loadingStage.addChild(logoSprite);
         outerStage.removeChild(winnerText);
@@ -645,7 +646,7 @@ INFO_HEIGHT = 50;
 
     }
 
-    function handleHealth(playerNr)
+    function c(playerNr)
     {
         if (player.health < 1)
         {
@@ -660,6 +661,7 @@ INFO_HEIGHT = 50;
             winnerText.position.y = 20;
             winnerText.position.x = 500;
             infoStage.addChild(winnerText);
+			console.log("handleHealth playerDied")
             socket.emit("playerDied", null);
 
             gameLoop = gameOver;
