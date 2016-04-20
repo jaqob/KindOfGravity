@@ -646,7 +646,7 @@ INFO_HEIGHT = 50;
 
     }
 
-    function c(playerNr)
+    function handleHealth(playerNr)
     {
         if (player.health < 1)
         {
