@@ -123,7 +123,7 @@ socket.on('playerDied', function (msg)
     else if(socket.id == games[index].player2SocketId) 
     {
        this.player1Wins++;
- io.to(games[index].player1SocketId).emit('winner', null);
+	   io.to(games[index].player1SocketId).emit('winner', null);
     
     }
 

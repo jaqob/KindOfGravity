@@ -772,7 +772,7 @@ console.log("startSinglePlayer " + level);
 	    socket.on('levelEnded', function (msg)
     {
         console.log("levelEnded " + msg);
-        levelEnded();
+        levelEnded(msg);
     }
     );
 	
