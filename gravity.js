@@ -45,9 +45,9 @@ io.on('connection', function (socket)
           );
 
 
-socket.on('createGame', function (msg)
+socket.on('createServer', function (msg)
 {
-  console.log("createGame start");
+  console.log("createServer start");
   
   var obj = JSON.parse(msg);
   
@@ -55,9 +55,27 @@ socket.on('createGame', function (msg)
   games[gameId] = new Game(gameId);
   games[gameId].player1SocketId = socket.id;
   games[gameId].level = obj.levelNr;
-  games[gameId].levelModifier = obj.levelModifier;
   console.log("createGame: " + games[gameId].id + " " + socket.id);
   socket.emit("gameId", games[gameId].id);
+}
+);		  
+		  
+		  
+socket.on('createGame', function (msg)
+{
+  console.log("createGame start");
+  for(var index = 0; index < games.length; index++)
+  {
+    if(socket.id == games[index].player1SocketId)// || socket.id == games[index].player2SocketId)
+    {
+		var obj = JSON.parse(msg);
+		games[index].levelModifier = obj.levelModifier;
+		if(games[index].player2SocketId != "")
+		{
+			io.to(games[index].player2SocketId).emit('loadGame', games[index]);
+		}
+  }
+  }		
 }
 );
 
@@ -139,7 +157,8 @@ socket.on('joinGame', function (msg)
       }
       else if(games[index].player2SocketId == socket.id)
       {
-        console.log("rejoin?");
+        console.log("Next Match");
+		 io.to(games[index].player2SocketId).emit('loadGame', games[index]);
       }
       else
       {
@@ -167,7 +186,6 @@ socket.on('readyGame', function (msg)
       }
      break;
    }
- 
 }
 );
 

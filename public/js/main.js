@@ -516,7 +516,14 @@ INFO_HEIGHT = 50;
             outerStage.addChild(winnerText);
         renderer.render(outerStage);
         console.log("socket " + socket.connected);
+		
+		var obj = new Object();
+		obj.levelNr = levelNr;		
+		var jsonString = JSON.stringify(obj);
+		socket.emit('createServer', jsonString);
+		
 		startLevel(levelNr, null);
+		
         //socket.emit('createGame', levelNr);
         //nextLevelStart();
     }
@@ -646,7 +653,7 @@ INFO_HEIGHT = 50;
             winnerText.position.y = 20;
             winnerText.position.x = 500;
             infoStage.addChild(winnerText);
-                    socket.emit("playerDied", null);
+            socket.emit("playerDied", null);
 
             gameLoop = gameOver;
         }
@@ -705,7 +712,6 @@ console.log("startSinglePlayer " + level);
         console.log("2p");
         $("#start").prop('disabled', false);
         host = true;
-
 
         var level = 1;
         if(document.getElementById('level1').checked)
