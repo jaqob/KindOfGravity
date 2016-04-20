@@ -662,7 +662,7 @@ INFO_HEIGHT = 50;
             infoStage.addChild(winnerText);
             socket.emit("playerDied", null);
 
-            //gameLoop = gameOver;
+            gameLoop = gameOver;
         }
 
     }
