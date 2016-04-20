@@ -472,7 +472,7 @@ INFO_HEIGHT = 50;
     }
 
 	
-    function levelEnded()
+    function levelEnded(levelNr)
     {
         outerStage.addChild(loadingStage);
         loadingStage.addChild(logoSprite);
@@ -489,17 +489,17 @@ INFO_HEIGHT = 50;
 
         outerStage.addChild(winnerText);
         renderer.render(outerStage);
-        console.log("levelEnded " + currentLevelNumber);
-        //socket.emit("levelEnded", currentLevelNumber);
+        console.log("levelEnded " + levelNr);
+
 
         if (multiplayer == false)
         {
-            startLevel(currentLevelNumber++, null);
+            startLevel(levelNr, null);
         }
 		
 		if(host == true)
 		{
-			startLevel(currentLevelNumber, null);
+			startLevel(levelNr, null);
 		}
     }
 
