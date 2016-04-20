@@ -113,25 +113,12 @@ socket.on('playerDied', function (msg)
 {
   for(var index = 0; index < games.length; index++)
   {
-	  /*
-    if(socket.id == games[index].player1SocketId)
+	  
+    if(socket.id == games[index].player1SocketId || socket.id == games[index].player2SocketId)
     {      
-
-      //io.to(games[index].player1SocketId).emit('startGame', games[index].level);
-       this.player2Wins++; 
-      io.to(games[index].player2SocketId).emit('winner', null);
-    }
-    else if(socket.id == games[index].player2SocketId) 
-    {
-       this.player1Wins++;
-	   io.to(games[index].player1SocketId).emit('winner', null);
-    
-    }
-	*/
-
       io.to(games[index].player1SocketId).emit('levelEnded', games[index]);
       io.to(games[index].player2SocketId).emit('levelEnded', games[index]);
-
+    }
     }
   
 }
