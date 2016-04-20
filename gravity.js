@@ -113,6 +113,7 @@ socket.on('playerDied', function (msg)
 {
   for(var index = 0; index < games.length; index++)
   {
+	  /*
     if(socket.id == games[index].player1SocketId)
     {      
 
@@ -126,9 +127,10 @@ socket.on('playerDied', function (msg)
 	   io.to(games[index].player1SocketId).emit('winner', null);
     
     }
+	*/
 
-      io.to(games[index].player1SocketId).emit('levelEnded', games[index].level);
-      io.to(games[index].player2SocketId).emit('levelEnded', games[index].level);
+      io.to(games[index].player1SocketId).emit('levelEnded', games[index]);
+      io.to(games[index].player2SocketId).emit('levelEnded', games[index]);
 
     }
   

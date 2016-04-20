@@ -769,10 +769,10 @@ console.log("startSinglePlayer " + level);
     }
     );
 	
-	    socket.on('levelEnded', function (msg)
+	socket.on('levelEnded', function (gameData)
     {
-        console.log("levelEnded " + msg);
-        levelEnded(msg);
+        console.log("levelEnded " + gameData.level);
+        levelEnded(gameData.level);
     }
     );
 	
