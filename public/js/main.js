@@ -658,7 +658,7 @@ INFO_HEIGHT = 50;
             winnerText.position.y = 20;
             winnerText.position.x = 500;
             infoStage.addChild(winnerText);
-            socket.emit("playerDied", null);
+            //socket.emit("playerDied", null);
 
             gameLoop = gameOver;
         }

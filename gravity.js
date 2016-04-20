@@ -120,15 +120,15 @@ socket.on('playerDied', function (msg)
        this.player2Wins++; 
       io.to(games[index].player2SocketId).emit('winner', null);
     }
-    else if(socket.id == games[index].player2SocketId)
+    else if(socket.id == games[index].player2SocketId) 
     {
        this.player1Wins++;
  io.to(games[index].player1SocketId).emit('winner', null);
     
     }
 
-      io.to(games[index].player1SocketId).emit('startGame', games[index].level);
-      io.to(games[index].player2SocketId).emit('startGame', games[index].level);
+      //io.to(games[index].player1SocketId).emit('startGame', games[index].level);
+      //io.to(games[index].player2SocketId).emit('startGame', games[index].level);
 
     }
   
