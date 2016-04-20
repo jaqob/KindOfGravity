@@ -471,6 +471,7 @@ INFO_HEIGHT = 50;
         startLevel(levelNr, null);
     }
 
+	
     function levelEnded()
     {
         outerStage.addChild(loadingStage);
@@ -502,6 +503,7 @@ INFO_HEIGHT = 50;
 		}
     }
 
+	
     function startMultiPlayer(levelNr)
     {
         console.log("CreateGame");
@@ -658,9 +660,9 @@ INFO_HEIGHT = 50;
             winnerText.position.y = 20;
             winnerText.position.x = 500;
             infoStage.addChild(winnerText);
-            //socket.emit("playerDied", null);
+            socket.emit("playerDied", null);
 
-            gameLoop = gameOver;
+            //gameLoop = gameOver;
         }
 
     }
@@ -766,6 +768,15 @@ console.log("startSinglePlayer " + level);
         document.getElementById("gameId").textContent = "URL to join: https://kindofgravity.herokuapp.com/join?server=" + msg;
     }
     );
+	
+	    socket.on('levelEnded', function (msg)
+    {
+        console.log("levelEnded " + msg);
+        levelEnded();
+    }
+    );
+	
+	
 
         socket.on('winner', function (msg)
     {

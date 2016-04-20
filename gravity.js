@@ -127,8 +127,8 @@ socket.on('playerDied', function (msg)
     
     }
 
-      //io.to(games[index].player1SocketId).emit('startGame', games[index].level);
-      //io.to(games[index].player2SocketId).emit('startGame', games[index].level);
+      io.to(games[index].player1SocketId).emit('levelEnded', games[index]);
+      io.to(games[index].player2SocketId).emit('levelEnded', games[index]);
 
     }
   
