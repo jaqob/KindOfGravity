@@ -474,7 +474,7 @@ INFO_HEIGHT = 50;
 	
     function levelEnded(levelNr)
     {
-		gameLoop = levelEnded;
+		gameLoop = gameOver;
         outerStage.addChild(loadingStage);
         loadingStage.addChild(logoSprite);
         outerStage.removeChild(winnerText);
@@ -574,8 +574,8 @@ INFO_HEIGHT = 50;
 
         outerStage.addChild(winnerText);
         renderer.render(outerStage);
-        loadLevelData(levelNr, levelModifier);
 		console.log("loadLevelData " + levelNr);
+        loadLevelData(levelNr, levelModifier);		
         //setTimeout(loadLevelData, 1000, levelNr);
         //requestAnimationFrame(gameLoop);
     }
@@ -773,7 +773,7 @@ console.log("startSinglePlayer " + level);
 	
 	socket.on('levelEnded', function (gameData)
     {
-        console.log("levelEnded " + gameData.level);
+        console.log("socket.on levelEnded " + gameData.level);
         levelEnded(gameData.level);
     }
     );
